@@ -1,4 +1,6 @@
 const mongoose = require('mongoose');
+const { Schema, model } = require('mongoose');
+
 
 const validateEmail = function(email) {
     const re = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
@@ -27,14 +29,20 @@ const userSchema = new mongoose.Schema({
             type: Schema.Types.ObjectId, 
             ref: 'User' 
         }],
-});
+    },
+    {
+        toJSON: {
+        getters: true,
+        },
+    }   
+);
 
-// userSchema
-//     .virtual('friendCount')
-//     // Getter
-//     .get(function () {
-//         return this.friends.length;
-//     });
+userSchema
+    .virtual('friendCount')
+    // Getter
+    .get(function () {
+        return this.friends.length;
+    });
 
 
 const User = mongoose.model('User', userSchema);

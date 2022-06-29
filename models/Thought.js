@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
-const Reaction = require('./Reaction');
+const reactionSchema = require('./Reaction');
+const {format_date} = require('../utils/timeFormat');
 
 const thoughtsSchema = new mongoose.Schema({
     thoughtText: { 
@@ -10,14 +11,22 @@ const thoughtsSchema = new mongoose.Schema({
     },
     createdAt: { 
         type: Date, 
-        default: Date.now 
+        // default: format_date(Date.now),
+        default: Date.now,
+        timestamps: true
     },
     username:{ 
         type: String, 
         required: true 
     },
-    reactions:[Reaction]
-});
+    reactions:[reactionSchema]
+    },
+    {
+        toJSON: {
+        getters: true,
+        },
+    }   
+);
 
 thoughtsSchema
     .virtual('reactionCount')
@@ -30,5 +39,22 @@ const Thought = mongoose.model('Thought', thoughtsSchema);
 
 const handleError = (err) => console.error(err);
 
-
+Thought.find({}).exec((err, collection) => {
+    if (collection.length === 0) {
+        Thought.insertMany(
+        [
+            {
+                "thoughtText": "Here's a cool thought...",
+                "username": "Olly",
+                "userId": "62ba2246f69da632472071be"
+            }
+        ],
+        (insertErr) => {
+            if (insertErr) {
+            handleError(insertErr);
+            }
+        }
+        );
+    }
+});
 module.exports = Thought;

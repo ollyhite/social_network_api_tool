@@ -1,30 +1,31 @@
-const mongoose = require('mongoose');
+const { Schema, Types } = require('mongoose');
 
-const reactionSchema = new mongoose.Schema({
-    reactionId: 
-    { 
-        type: String, 
-        required: true 
-    },
-    username:
-    { 
-        type: String, 
-        required: true 
-    },
-    reactionBody:
+const reactionSchema = new Schema(
     {
-
+        reactionId: {
+        type: Schema.Types.ObjectId,
+        default: () => new Types.ObjectId(),
+        },
+        reactionBody: {
+        type: String,
+        required: true,
+        maxlength: 280,
+        },
+        username: {
+        type: String,
+        required: true,
+        },
+        createdAt: {
+        type: Date,
+        default: Date.now,
+        },
     },
-    createdAt: 
-    { 
-        type: Date, 
-        default: Date.now 
-    },
-});
+    {
+        toJSON: {
+        getters: true,
+        },
+        id: false,
+    }
+);
 
-const Reaction = mongoose.model('Reaction', reactionSchema);
-
-const handleError = (err) => console.error(err);
-
-
-module.exports = Reaction;
+module.exports = reactionSchema;
