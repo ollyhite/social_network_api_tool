@@ -1,13 +1,12 @@
-const mongoose = require('mongoose');
 const { Schema, model } = require('mongoose');
-
 
 const validateEmail = function(email) {
     const re = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
     return re.test(email)
 };
 
-const userSchema = new mongoose.Schema({
+// Schema to create Post model
+const userSchema = new Schema({
     username: { 
         type: String,
         unique: true, 
@@ -32,10 +31,13 @@ const userSchema = new mongoose.Schema({
     },
     {
         toJSON: {
-        getters: true,
+        virtuals: true,
         },
-    }   
+        id: false,
+
+    }
 );
+
 
 userSchema
     .virtual('friendCount')
@@ -45,7 +47,8 @@ userSchema
     });
 
 
-const User = mongoose.model('User', userSchema);
+
+const User = model('User', userSchema);
 
 const handleError = (err) => console.error(err);
 

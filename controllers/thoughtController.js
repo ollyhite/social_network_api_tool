@@ -17,11 +17,13 @@ module.exports={
         .catch((err) => res.status(500).json(err));
     },
     createThought(req,res){
+        // console.log(req.body);
         Thought.create(req.body)
         .then((thought) => {
+            console.log(thought);
             return User.findOneAndUpdate(
             { username: req.body.username },
-            { $addToSet: { thoughts: thought._id } },
+            { $addToSet: { thoughts: thought } },
             { new: true }
             );
         })
@@ -53,11 +55,22 @@ module.exports={
         });
     },
     deleteThought(req,res){
-        Thought.findOneAndDelete({ _id: req.params.thoughtId })
-        .then((thought)=>
-        !thought
-            ? res.status(404).json({ message: 'No user with that ID' })
-            : res.json(thought)
+        Thought.findOneAndRemove({ _id: req.params.thoughtId })
+        .then((thought) =>
+            !thought
+            ? res.status(404).json({ message: 'No thought with this id!' })
+            : User.findOneAndUpdate(
+                { thoughts: req.params.thoughtId },
+                { $pull: { thoughts: req.params.thoughtId } },
+                { new: true }
+                )
+        )
+        .then((user) =>
+            !user
+            ? res.status(404).json({
+                message: 'Application created but no user with this id!',
+                })
+            : res.json({ message: 'Application successfully deleted!' })
         )
         .catch((err) => res.status(500).json(err));
     },

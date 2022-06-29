@@ -1,8 +1,9 @@
-const mongoose = require('mongoose');
+const { Schema, model } = require('mongoose');
 const reactionSchema = require('./Reaction');
-const {format_date} = require('../utils/timeFormat');
 
-const thoughtsSchema = new mongoose.Schema({
+
+// Schema to create Post model
+const thoughtsSchema = new Schema({
     thoughtText: { 
         type: String, 
         required: true,
@@ -23,10 +24,12 @@ const thoughtsSchema = new mongoose.Schema({
     },
     {
         toJSON: {
-        getters: true,
+        virtuals: true,
         },
-    }   
+        id: false,
+    }
 );
+
 
 thoughtsSchema
     .virtual('reactionCount')
@@ -35,7 +38,9 @@ thoughtsSchema
         return this.reactions.length;
     });
 
-const Thought = mongoose.model('Thought', thoughtsSchema);
+
+
+const Thought = model('Thought', thoughtsSchema);
 
 const handleError = (err) => console.error(err);
 
@@ -57,4 +62,5 @@ Thought.find({}).exec((err, collection) => {
         );
     }
 });
+
 module.exports = Thought;
