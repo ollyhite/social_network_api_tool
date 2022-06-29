@@ -1,6 +1,6 @@
 const { Schema, model } = require('mongoose');
 const reactionSchema = require('./Reaction');
-
+const {format_date} = require('../utils/timeFormat');
 
 // Schema to create Post model
 const thoughtsSchema = new Schema({
@@ -11,10 +11,9 @@ const thoughtsSchema = new Schema({
         maxLength: 280,
     },
     createdAt: { 
-        type: Date, 
-        // default: format_date(Date.now),
+        type: String, 
         default: Date.now,
-        timestamps: true
+        set: (timestamps) => format_date(timestamps)
     },
     username:{ 
         type: String, 
@@ -37,7 +36,6 @@ thoughtsSchema
     .get(function () {
         return this.reactions.length;
     });
-
 
 
 const Thought = model('Thought', thoughtsSchema);
