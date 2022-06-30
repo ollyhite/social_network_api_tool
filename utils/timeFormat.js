@@ -2,7 +2,7 @@ const moment = require('moment')
 
 module.exports = {
   format_date: (date) => {
-    return `${moment.utc(date).format('MM/DD/YYYY HH:MM:SS')}`;
+    return `${moment.utc(date).format('MM/DD/YYYY hh:mm:ss')}`;
   },
   format_date2: (date) => {
     console.log(date);
