@@ -31,12 +31,14 @@ AS A manager at an internet retail company, I want a back end for my e-commerce 
 ## Usage
 
 - How to setup social_network_api_tool \
-  ![set_up_video](./dist/images/) \
+  ![set_up_video](./dist/images/social_network_api_set_up.gif)
 
   https://drive.google.com/file/d/1l-YxFzzx1c5zeQ0dRlFZStakw0xJdUak/view
 
 - How to use social_network_api_tool \
-  ![walkthrough_video](./dist/images/) \
+  ![walkthrough_video](./dist/images/social_network_api_walkthrough.gif)
+
+  https://drive.google.com/file/d/1TXfg5rdfcrPrPmJBksNU7uXPrSgssVa1/view
 
 ## Built With
 
