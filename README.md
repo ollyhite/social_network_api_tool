@@ -32,6 +32,9 @@ AS A manager at an internet retail company, I want a back end for my e-commerce 
 
 - How to setup social_network_api_tool \
   ![set_up_video](./dist/images/) \
+
+  https://drive.google.com/file/d/1l-YxFzzx1c5zeQ0dRlFZStakw0xJdUak/view
+
 - How to use social_network_api_tool \
   ![walkthrough_video](./dist/images/) \
 

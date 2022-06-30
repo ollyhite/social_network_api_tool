@@ -11,7 +11,7 @@ module.exports = {
       // .select('-__v')
       .then((user) =>
         !user
-          ? res.status(404).json({ message: 'No user with this id!' })
+          ? res.status(404).json({ message: 'No user found with that ID :(' })
           : res.json(user)
       )
       .catch((err) => res.status(500).json(err));
@@ -29,7 +29,7 @@ module.exports = {
     )
       .then((user) =>
         !user
-          ? res.status(404).json({ message: 'No user with this id!' })
+          ? res.status(404).json({ message: 'No user found with that ID :(' })
           : res.json(user)
       )
       .catch((err) => {
@@ -41,7 +41,7 @@ module.exports = {
     User.findOneAndDelete({ _id: req.params.userId })
     .then((user)=>
       !user
-          ? res.status(404).json({ message: 'No user with that ID' })
+          ? res.status(404).json({ message: 'No user found with that ID :(' })
           : res.json(user)
       )
       .catch((err) => res.status(500).json(err));
